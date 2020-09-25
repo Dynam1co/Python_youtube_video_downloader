@@ -2,7 +2,7 @@
 
 Created: Sep 25, 2020 6:20 PM
 
-Pescarga de vídeos de Youtube seleccionando la calidad. También se puede descargar solo el audio de un vídeo.
+Descarga de vídeos de Youtube seleccionando la calidad. También se puede descargar solo el audio de un vídeo.
 
 ## Pre-requisitos 📋
 
