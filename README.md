@@ -1,4 +1,4 @@
-# Python Youtube downloader
+# Python Youtube downloader 📺
 
 Created: Sep 25, 2020 6:20 PM
 
@@ -12,7 +12,7 @@ Pescarga de vídeos de Youtube seleccionando la calidad. También se puede desca
 
 Configurar la ruta donde se descargarán los vídeos:
 
-En el fichero [config.py](http://config.py) cambiaremos la ruta que viene por defecto.
+En el fichero [config.py](python/youtube/downloader/config.py) cambiaremos la ruta que viene por defecto.
 
 ## Herramientas/Librerías usadas 🛠️
 
