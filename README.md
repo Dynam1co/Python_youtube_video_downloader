@@ -12,7 +12,7 @@ Pescarga de vídeos de Youtube seleccionando la calidad. También se puede desca
 
 Configurar la ruta donde se descargarán los vídeos:
 
-En el fichero [config.py](python/youtube/downloader/config.py) cambiaremos la ruta que viene por defecto.
+En el fichero [config.py](python_youtube_downloader/config.py) cambiaremos la ruta que viene por defecto.
 
 ## Herramientas/Librerías usadas 🛠️
 
