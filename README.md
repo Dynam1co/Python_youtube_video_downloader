@@ -29,7 +29,7 @@ Al iniciar la aplicación nos pide que seleccionemos una de las dos opciones:
 
 ![Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture.png](Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture.png)
 
-### Descara un solo link
+### Descarga un solo link
 
 Nos pedirá la url del vídeo:
 
