@@ -5,8 +5,10 @@ from pytube import YouTube
 import os
 from moviepy.editor import *
 
+import conf_management as cfg
 
-parent_dir = r"D:\Youtube"
+
+parent_dir = ''
 
 
 def clear(): os.system('cls')
@@ -112,6 +114,7 @@ if __name__ == "__main__":
     tarea = 0
     job = 0
     enlaces = []    
+    parent_dir = cfg.get_ruta_descargas()
 
     while tarea != '3':        
         enlaces.clear()
