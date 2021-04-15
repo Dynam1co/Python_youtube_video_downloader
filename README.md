@@ -6,7 +6,7 @@ Descarga de vídeos de Youtube seleccionando la calidad. También se puede desca
 
 ## Pre-requisitos 📋
 
-- [Poetry](https://python-poetry.org/): Gestor de dependencias python.
+- Entorno virtual con las dependencias instaladas del fichero [requirements.txt](requirements.txt)
 
 ## Configuraciones ⚙️
 
@@ -18,8 +18,9 @@ En el fichero [config.py](python_youtube_downloader/config.py) cambiaremos la ru
 
 Estas son las herramientas usadas durante el desarrollo del proyecto:
 
-- [Visual Studio Code](https://code.visualstudio.com/): Como editor de código Python y Jupyter Notebook.
+- [NeoVim](https://neovim.io/): Como editor de código Python.
 - [Pytube 9.6.0](https://python-pytube.readthedocs.io/en/latest/): Para descarga de vídeos de Youtube.
+- [moviepy](https://pypi.org/project/moviepy/): Para montar el audio y el vídeo en un mismo fichero.
 
 ## Funcionamiento 🔧
 
