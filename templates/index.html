@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4"><title>Descargas — Video Downloader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-icon">▶</span><span>vid<span class="brand-light">flow</span><small>VIDEO DOWNLOADER</small></span></a>
+      <div class="nav-label">ESPACIO DE TRABAJO</div>
+      <a id="new-download" class="nav-item active" href="#"><span>⇩</span> Nueva descarga</a>
+      <div class="side-note"><div class="note-icon">✦</div><strong>Simple y directo</strong><p>Pega un enlace, elige el formato y guarda el archivo en tu equipo.</p></div>
+      <div class="sidebar-bottom"><span class="status-dot"></span> Descargas listas <span class="version">v1.0</span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="crumb">Inicio <span>/</span> <b>Nueva descarga</b></div><div class="local-badge"><span class="status-dot"></span> Procesamiento local</div></header>
+      <section class="intro"><div class="eyebrow">TU CONTENIDO, A TU MANERA</div><h1>¿Qué quieres <em>descargar?</em></h1><p>Guarda videos y audio de YouTube en unos pocos pasos.</p></section>
+      <section class="workspace">
+        <div class="form-card">
+          <div class="step-heading"><span class="step">01</span><div><h2>Añade tus enlaces</h2><p>Puedes pegar un enlace o una lista, uno por línea.</p></div></div>
+          <label for="urls">ENLACE DE YOUTUBE</label>
+          <div class="url-wrap"><span class="link-icon">↗</span><textarea id="urls" rows="2" placeholder="https://www.youtube.com/watch?v=..."></textarea><button id="preview" class="inspect-btn">Consultar video <span>→</span></button></div>
+          <div class="hint"><span>ⓘ</span> Para una lista, pega cada enlace en una línea nueva.</div>
+          <div id="preview-card" class="preview-card hidden"></div>
+          <div class="divider"></div>
+          <div class="step-heading second"><span class="step">02</span><div><h2>Elige el formato</h2><p>Selecciona cómo quieres guardar tu archivo.</p></div></div>
+          <div class="format-grid">
+            <button class="format-card selected" data-mode="video"><span class="format-icon video-icon">▣</span><span class="format-copy"><b>Video</b><small>MP4 · video y audio</small></span><span class="radio"></span></button>
+            <button class="format-card" data-mode="audio"><span class="format-icon audio-icon">♫</span><span class="format-copy"><b>Solo audio</b><small>Audio original · M4A o similar</small></span><span class="radio"></span></button>
+          </div>
+          <div id="quality-row" class="quality-row hidden"><label for="quality">CALIDAD DE VIDEO</label><select id="quality"><option value="">Automática · mejor disponible</option></select></div>
+          <div class="actions"><div class="destination"><span>↳</span><div><small>SE GUARDARÁ EN</small><b id="destination">downloads/video</b></div></div><button id="start" class="start-btn">Descargar ahora <span>↓</span></button></div>
+          <div id="message" class="message hidden"></div>
+        </div>
+        <aside class="info-column"><div class="info-card"><div class="info-art"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-play">▶</div><span class="spark spark-one">✳</span><span class="spark spark-two">✦</span></div><h3>Tu biblioteca,<br>siempre disponible.</h3><p>Los archivos se guardan en la carpeta de descargas configurada en este proyecto.</p><div class="info-rule"></div><div class="feature"><span>✓</span><div><b>Sin complicaciones</b><small>Una interfaz sencilla para tu herramienta.</small></div></div><div class="feature"><span>✓</span><div><b>Descargas por lotes</b><small>Procesa varios enlaces en una sola tarea.</small></div></div></div><div class="tip-card"><span>✦</span><p><b>Un consejo</b><br>La calidad disponible depende de cada video.</p></div></aside>
+      </section>
+      <footer>VIDEO DOWNLOADER <span>·</span> Hecho para organizar lo que te gusta.</footer>
+    </main>
+  </div>
+  <div id="completion-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="completion-title">
+    <div class="modal-backdrop" data-dismiss="true"></div>
+    <section class="completion-dialog">
+      <button class="modal-x" type="button" aria-label="Cerrar" data-dismiss="true">×</button>
+      <div class="success-mark">✓</div>
+      <div class="eyebrow">TAREA COMPLETADA</div>
+      <h2 id="completion-title">Descarga finalizada</h2>
+      <p id="completion-summary">Tus archivos están listos.</p>
+      <div id="completion-files" class="completion-files"></div>
+      <button class="start-btn modal-done" type="button" data-dismiss="true">Listo</button>
+    </section>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>

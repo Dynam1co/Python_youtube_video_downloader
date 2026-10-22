@@ -61,3 +61,15 @@ Cuando el proceso acabe, veremos los vídeos o audios en la ruta configurada.
 - Comenta a otros sobre este proyecto 📢
 - Da las gracias públicamente 🤓
 - Sígueme en [Twitter](https://twitter.com/AsensiFj) 🐦
+## Interfaz web
+
+El proyecto incluye una interfaz web local con Flask. Para iniciarla desde la carpeta del proyecto:
+
+```powershell
+python -m pip install -r requirements.txt
+python web_app.py
+```
+
+Abre http://127.0.0.1:5000 en el navegador. Pega un enlace o varios (uno por línea), consulta el primer video si quieres ver sus datos y elige video o audio. Las descargas se guardan en `downloads/video` o `downloads/audio` dentro del proyecto cuando la ruta configurada original no está disponible.
+
+La interfaz usa yt-dlp para consultar los videos y FFmpeg para unir las pistas cuando YouTube ofrece video y audio por separado. El audio se guarda en su formato original (M4A cuando est? disponible).
