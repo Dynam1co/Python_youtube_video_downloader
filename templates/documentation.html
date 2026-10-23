@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4"><title>Documentación — Video Downloader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='docs.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('home') }}"><span class="brand-icon">▶</span><span>vid<span class="brand-light">flow</span><small>VIDEO DOWNLOADER</small></span></a>
+      <div class="nav-label">ESPACIO DE TRABAJO</div>
+      <a class="nav-item" href="{{ url_for('home') }}"><span>⇩</span> Nueva descarga</a>
+      <a class="nav-item active" href="{{ url_for('documentation') }}"><span>ℹ</span> Documentación</a>
+      <a class="nav-item" href="{{ url_for('user_manual') }}"><span>☷</span> Manual de uso</a>
+      <div class="side-note"><div class="note-icon">✦</div><strong>Guía del proyecto</strong><p>Conoce las funciones y los componentes de Video Downloader.</p></div>
+      <div class="sidebar-bottom"><span class="status-dot"></span> Documentación</div>
+    </aside>
+    <main class="main docs-main">
+      <header class="topbar"><div class="crumb"><a href="{{ url_for('home') }}">Inicio</a> <span>/</span> <b>Documentación</b></div><div class="local-badge"><span class="status-dot"></span> Referencia del programa</div></header>
+      <section class="intro"><div class="eyebrow">REFERENCIA DEL PROYECTO</div><h1>Documentación</h1><p>Qué ofrece la aplicación, cómo se organiza y cómo se procesan las descargas.</p></section>
+      <div class="docs-layout">
+        <nav class="docs-toc" aria-label="En esta página"><b>En esta página</b><a href="#resumen">Resumen</a><a href="#funciones">Funciones</a><a href="#componentes">Componentes</a><a href="#flujo">Flujo de descarga</a><a href="#salidas">Archivos y formatos</a><a href="#limites">Comportamiento y límites</a></nav>
+        <article class="docs-card">
+          <section id="resumen"><h2>Resumen</h2><p>Video Downloader ofrece dos maneras de descargar videos o audio de YouTube: una aplicación web local y un programa de consola. La interfaz web permite consultar la información de un video, elegir formato y calidad, procesar varios enlaces y revisar el resultado desde el navegador.</p><p>La aplicación web se sirve desde Flask. Las consultas y descargas las realiza <code>yt-dlp</code>; FFmpeg, incluido mediante <code>imageio-ffmpeg</code>, permite combinar pistas cuando se selecciona un formato de video que las ofrece por separado.</p></section>
+          <section id="funciones"><h2>Funciones principales</h2><ul><li><b>Consulta:</b> obtiene título, canal, duración, miniatura y resoluciones MP4 del primer enlace.</li><li><b>Descarga de video:</b> guarda video y audio en MP4, con selección automática o una resolución consultada.</li><li><b>Descarga de audio:</b> guarda la pista de audio en el formato original disponible, normalmente M4A.</li><li><b>Procesamiento por lote:</b> procesa los enlaces no vacíos, uno por línea, de forma secuencial.</li><li><b>Estado y resultados:</b> muestra avance, archivos listos y errores individuales al finalizar la tarea.</li></ul></section>
+          <section id="componentes"><h2>Componentes</h2><div class="component-list"><div><code>web_app.py</code><p>Rutas Flask, validación de enlaces, vista previa, gestión de tareas, descarga y acceso a resultados.</p></div><div><code>templates/index.html</code><p>Página de descarga: formulario, opciones, mensajes y ventana de finalización.</p></div><div><code>static/app.js</code><p>Conecta la interfaz con las rutas API, consulta estado periódicamente y presenta archivos y errores.</p></div><div><code>static/style.css</code><p>Estilos de la aplicación de descarga.</p></div><div><code>templates/documentation.html</code> y <code>templates/manual.html</code><p>Páginas web de documentación técnica y manual de uso.</p></div><div><code>static/docs.css</code><p>Diseño y navegación compartidos por las páginas de documentación.</p></div><div><code>main.py</code><p>Versión de consola: descarga individual o por fichero, selección de calidad y conversión de audio.</p></div><div><code>config.py</code> y <code>conf_management.py</code><p>Ruta base de descargas consultada por la versión de consola y por la interfaz web como ruta preferida.</p></div></div></section>
+          <section id="flujo"><h2>Flujo de descarga web</h2><ol><li>El navegador envía los enlaces, el modo (video o audio) y, opcionalmente, el formato elegido a <code>/api/download</code>.</li><li>El servidor valida los enlaces y crea una tarea en segundo plano.</li><li>El navegador consulta <code>/api/jobs/&lt;id&gt;</code> para mostrar el progreso.</li><li>El servidor registra los archivos completados o errores de cada enlace.</li><li>Al finalizar, el navegador muestra los resultados. El acceso <code>/api/jobs/&lt;id&gt;/files/&lt;índice&gt;</code> permite abrir el archivo.</li></ol><p>La vista previa usa <code>/api/preview</code> y consulta solamente el primer enlace que no esté vacío.</p></section>
+          <section id="salidas"><h2>Archivos y formatos</h2><p>La ruta configurada en <code>config.py</code> es <code>/mnt/d/Youtube</code>. La interfaz web la utiliza si existe como ruta válida en el sistema; de lo contrario, utiliza la carpeta <code>downloads</code> dentro del proyecto. En la interfaz, videos y audios se separan en <code>video</code> y <code>audio</code>.</p><p>El modo video solicita MP4 y puede combinar pistas separadas. El modo audio prioriza M4A y conserva el formato de audio que entrega la fuente. En consola, la opción de audio convierte el archivo a MP3 mediante MoviePy.</p></section>
+          <section id="limites"><h2>Comportamiento y límites</h2><ul><li>Solo se aceptan enlaces que comiencen con YouTube o youtu.be.</li><li>Los parámetros de playlist se ignoran en la consulta y cada enlace se trata como un video individual.</li><li>La calidad depende de los formatos disponibles para cada video. La lista de calidades se carga al consultar el enlace.</li><li>Una consulta de vista previa no valida los enlaces adicionales de una lista; cada uno se intenta descargar durante la tarea.</li><li>Los estados de tarea se mantienen en memoria del proceso de Flask, por lo que no son un historial persistente.</li></ul><p>Consulta el <a href="{{ url_for('user_manual') }}">manual de uso</a> para seguir el flujo desde la interfaz.</p></section>
+        </article>
+      </div>
+      <footer>VIDEO DOWNLOADER <span>·</span> Documentación del proyecto.</footer>
+    </main>
+  </div>
+</body>
+</html>

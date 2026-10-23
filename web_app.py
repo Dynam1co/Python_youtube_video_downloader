@@ -42,6 +42,16 @@ def home():
     return render_template("index.html")
 
 
+@app.get("/documentacion")
+def documentation():
+    return render_template("documentation.html")
+
+
+@app.get("/manual")
+def user_manual():
+    return render_template("manual.html")
+
+
 @app.post("/api/preview")
 def preview():
     url = (request.json or {}).get("url", "").strip()

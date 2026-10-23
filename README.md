@@ -1,75 +1,56 @@
-# Python Youtube downloader 📺
+# Video Downloader
 
-Created: Sep 25, 2020 6:20 PM
+Aplicación para consultar videos de YouTube y guardar videos o audio. Incluye una interfaz web local y una versión de consola.
 
-Descarga de vídeos de Youtube seleccionando la calidad. También se puede descargar solo el audio de un vídeo.
+La interfaz web incluye [documentación del proyecto](http://127.0.0.1:5000/documentacion) y un [manual de uso](http://127.0.0.1:5000/manual).
 
-## Pre-requisitos 📋
+## Uso de la interfaz web
 
-- Entorno virtual con las dependencias instaladas del fichero [requirements.txt](requirements.txt)
+1. Inicia la aplicación ejecutando `python web_app.py` desde la carpeta del proyecto y abre `http://127.0.0.1:5000` en el navegador.
+2. Pega uno o varios enlaces de YouTube en el campo de texto. Para una descarga por lote, coloca cada enlace en una línea distinta.
+3. Opcionalmente, pulsa **Consultar video** para ver el título, el canal y la duración del primer enlace. Al consultarlo también se cargan las calidades MP4 disponibles.
+4. Elige **Video** o **Solo audio**. Para video, puedes dejar la calidad en automática o escoger una resolución disponible después de consultar el enlace.
+5. Pulsa **Descargar ahora** y espera a que termine el proceso. El cuadro final muestra los archivos descargados, los errores que ocurrieron y un enlace **Ver archivo** para abrir cada resultado.
 
-## Configuraciones ⚙️
+La interfaz guarda los videos en `downloads/video` y el audio en `downloads/audio` dentro del proyecto cuando la ruta definida en la configuración no está disponible. El audio se conserva en el formato original que ofrece YouTube, normalmente M4A. La calidad y los formatos disponibles dependen de cada video.
 
-Configurar la ruta donde se descargarán los vídeos:
+## Uso de la consola
 
-En el fichero [config.py](python_youtube_downloader/config.py) cambiaremos la ruta que viene por defecto.
+La versión de consola se ejecuta con `python main.py` y presenta un menú:
 
-## Herramientas/Librerías usadas 🛠️
+- **Descargar enlace YouTube**: procesa un único enlace.
+- **Descargar fichero**: lee enlaces desde un archivo de texto, uno por línea.
+- **Salir**: termina el programa.
 
-Estas son las herramientas usadas durante el desarrollo del proyecto:
+Después de elegir una de las dos primeras opciones, selecciona el tipo de descarga:
 
-- [NeoVim](https://neovim.io/): Como editor de código Python.
-- [Pytube 9.6.0](https://python-pytube.readthedocs.io/en/latest/): Para descarga de vídeos de Youtube.
-- [moviepy](https://pypi.org/project/moviepy/): Para montar el audio y el vídeo en un mismo fichero.
+- **Descarga rápida video y audio**: obtiene el formato progresivo disponible, que incluye ambas pistas.
+- **Descarga video seleccionando calidad**: muestra los formatos MP4 de video y permite escoger uno. Descarga el audio por separado y lo combina con el video.
+- **Descarga audio**: descarga la pista de audio y la convierte a MP3.
 
-## Funcionamiento 🔧
+La selección de calidad está disponible para un enlace individual. Al procesar un fichero, esa opción usa la primera calidad listada para cada enlace.
 
-Podemos descargar los vídeos uno a uno usando su link a Youtube o poner las urls en un fichero de texto y que la aplicación los descargue en bucle.
+## Partes del programa
 
-Al iniciar la aplicación nos pide que seleccionemos una de las dos opciones:
+- [`web_app.py`](web_app.py): servidor Flask, consulta de información, selección de formatos, tareas de descarga y entrega de archivos al navegador. Usa `yt-dlp` y FFmpeg.
+- [`templates/index.html`](templates/index.html): estructura de la interfaz web.
+- [`static/app.js`](static/app.js): interacción de la página: consulta de enlaces, selección de formato, seguimiento del progreso y resultados.
+- [`static/style.css`](static/style.css): estilos visuales de la interfaz.
+- [`main.py`](main.py): menús y flujo de descarga de la versión de consola; usa `pytube` y `moviepy` para combinar pistas o convertir audio.
+- [`config.py`](config.py) y [`conf_management.py`](conf_management.py): configuración y acceso a la ruta base de descargas usada por la consola. La interfaz web recurre a la carpeta `downloads` del proyecto cuando la ruta configurada no existe o no es válida en el sistema actual.
+- `downloads/video` y `downloads/audio`: carpetas de salida usadas por la interfaz web como alternativa local.
 
-![Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture.png](Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture.png)
+## Notas de uso
 
-### Descarga un solo link
+- La interfaz web acepta enlaces de YouTube (`youtube.com` y `youtu.be`) y procesa las listas de forma secuencial.
+- La vista previa consulta únicamente el primer enlace; la descarga puede incluir todos los enlaces pegados.
+- Si un enlace falla, los demás enlaces de la tarea continúan procesándose y el resultado informa qué archivos tuvieron errores.
+- Usa la herramienta solo con contenido que tengas derecho a descargar y de acuerdo con las condiciones aplicables de YouTube.
 
-Nos pedirá la url del vídeo:
+## Pruebas
 
-![Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%201.png](Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%201.png)
-
-Ahora tendremos que seleccionar una de estas tres opciones:
-
-- Descarga rápida de vídeo y audio: descarga el vídeo junto con el audio en baja calidad
-- Descargar vídeo seleccionando la calidad: nos mostrará las calidades disponibles en el vídeo para que seleccionemos una. Esta opción es la que más tarda porque tiene que descargar el vídeo por un lado y el audio por otro para mergearlo después. Este proceso es transparente para el usuario y se hace de forma automática.
-- Descargar audio: descarga únicamente el audio de la canción.
-
-![Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%202.png](Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%202.png)
-
-### Descarga en bucle
-
-Nos pedirá la ruta del fichero de texto que contiene los enlaces:
-
-![Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%203.png](Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%203.png)
-
-El fichero tendrá este formato:
-
-![Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%204.png](Python%20Youtube%20downloader%20950958136b7941818d625833951a1a95/Capture%204.png)
-
-Cuando el proceso acabe, veremos los vídeos o audios en la ruta configurada.
-
-## Expresiones de gratitud 🎁
-
-- Comenta a otros sobre este proyecto 📢
-- Da las gracias públicamente 🤓
-- Sígueme en [Twitter](https://twitter.com/AsensiFj) 🐦
-## Interfaz web
-
-El proyecto incluye una interfaz web local con Flask. Para iniciarla desde la carpeta del proyecto:
+Las pruebas individuales de validación y manejo de errores están en [`test/test_web_app.py`](test/test_web_app.py). Se ejecutan con:
 
 ```powershell
-python -m pip install -r requirements.txt
-python web_app.py
+python -m unittest discover -s test -v
 ```
-
-Abre http://127.0.0.1:5000 en el navegador. Pega un enlace o varios (uno por línea), consulta el primer video si quieres ver sus datos y elige video o audio. Las descargas se guardan en `downloads/video` o `downloads/audio` dentro del proyecto cuando la ruta configurada original no está disponible.
-
-La interfaz usa yt-dlp para consultar los videos y FFmpeg para unir las pistas cuando YouTube ofrece video y audio por separado. El audio se guarda en su formato original (M4A cuando est? disponible).
