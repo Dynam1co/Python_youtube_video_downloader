@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4"><title>Manual de uso — Video Downloader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='docs.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('home') }}"><span class="brand-icon">▶</span><span>vid<span class="brand-light">flow</span><small>VIDEO DOWNLOADER</small></span></a>
+      <div class="nav-label">ESPACIO DE TRABAJO</div>
+      <a class="nav-item" href="{{ url_for('home') }}"><span>⇩</span> Nueva descarga</a>
+      <a class="nav-item" href="{{ url_for('documentation') }}"><span>ℹ</span> Documentación</a>
+      <a class="nav-item active" href="{{ url_for('user_manual') }}"><span>☷</span> Manual de uso</a>
+      <div class="side-note"><div class="note-icon">✦</div><strong>Guía paso a paso</strong><p>Desde pegar el enlace hasta abrir el archivo descargado.</p></div>
+      <div class="sidebar-bottom"><span class="status-dot"></span> Manual de uso</div>
+    </aside>
+    <main class="main docs-main">
+      <header class="topbar"><div class="crumb"><a href="{{ url_for('home') }}">Inicio</a> <span>/</span> <b>Manual de uso</b></div><div class="local-badge"><span class="status-dot"></span> Guía de usuario</div></header>
+      <section class="intro"><div class="eyebrow">GUÍA PASO A PASO</div><h1>Manual de uso</h1><p>Cómo descargar un video, extraer audio o procesar una lista de enlaces.</p></section>
+      <div class="docs-layout">
+        <nav class="docs-toc" aria-label="En esta página"><b>En esta página</b><a href="#web">Interfaz web</a><a href="#consulta">Consultar un video</a><a href="#descargar">Descargar</a><a href="#lote">Varios enlaces</a><a href="#consola">Consola</a><a href="#problemas">Si algo falla</a></nav>
+        <article class="docs-card">
+          <section id="web"><h2>Interfaz web</h2><p>Abre la página local de Video Downloader. En la pantalla principal encontrarás el campo para enlaces, el selector de formato, la calidad, la carpeta de destino y el botón para comenzar.</p><div class="callout"><b>Antes de empezar</b><span>Usa enlaces individuales de YouTube, ya sea de <code>youtube.com</code> o <code>youtu.be</code>. La aplicación procesa cada enlace como un video.</span></div></section>
+          <section id="consulta"><h2>Consultar un video</h2><ol><li>Pega el enlace en el cuadro <b>Enlace de YouTube</b>.</li><li>Pulsa <b>Consultar video</b>.</li><li>Revisa la tarjeta con título, canal y duración. Si la consulta funciona, aparecerán las resoluciones MP4 disponibles en el selector de calidad.</li></ol><p>Consultar es opcional si quieres descargar con calidad automática. En listas, la vista previa muestra únicamente el primer enlace.</p></section>
+          <section id="descargar"><h2>Descargar video o audio</h2><h3>Video</h3><ol><li>Selecciona <b>Video</b>.</li><li>Deja <b>Automática · mejor disponible</b> para que la aplicación elija, o selecciona una resolución después de consultar el video.</li><li>Comprueba el destino mostrado y pulsa <b>Descargar ahora</b>.</li></ol><p>La descarga de video se guarda como MP4. Si YouTube entrega video y audio por separado, la aplicación los combina.</p><h3>Solo audio</h3><ol><li>Selecciona <b>Solo audio</b>. El destino cambia a <code>downloads/audio</code>.</li><li>Pulsa <b>Descargar ahora</b>. La calidad de video deja de aplicar.</li></ol><p>El audio web se conserva en el formato original disponible, normalmente M4A.</p></section>
+          <section id="lote"><h2>Procesar varios enlaces</h2><p>Pega cada URL en una línea independiente. Selecciona el mismo modo para toda la tarea: video o audio. La aplicación procesará los enlaces uno por uno y actualizará el estado mientras trabaja.</p><p>Al terminar, la ventana de resultados indica cuántos archivos se descargaron. Pulsa <b>Ver archivo</b> para abrir un resultado. Si algún enlace falló, se mostrará su error junto a los archivos completados; los demás enlaces seguirán procesándose.</p></section>
+          <section id="consola"><h2>Usar la versión de consola</h2><p>La aplicación también tiene un menú en consola, iniciado con <code>python main.py</code> desde el proyecto:</p><ol><li>Elige <b>1</b> para introducir un enlace o <b>2</b> para indicar un archivo de texto con enlaces (uno por línea).</li><li>Elige <b>1</b> para descarga rápida de video y audio, <b>2</b> para video con selección de calidad o <b>3</b> para audio.</li><li>Para un enlace individual con la opción 2, introduce el número de calidad que aparece en la lista.</li><li>Cuando termine, busca los archivos en la ruta configurada en <code>config.py</code>.</li></ol><p>En consola, el modo de audio convierte la pista a MP3. Si eliges calidad al procesar un archivo de enlaces, se usa automáticamente la primera calidad listada para cada enlace.</p></section>
+          <section id="problemas"><h2>Si algo falla</h2><ul><li><b>Enlace no válido:</b> comprueba que sea una URL completa de YouTube o youtu.be.</li><li><b>No se pudo consultar el video:</b> verifica el enlace y vuelve a intentarlo. Puede que el video no esté disponible para consulta.</li><li><b>No aparece la resolución esperada:</b> vuelve a consultar el video. Las resoluciones dependen de la fuente.</li><li><b>La tarea termina con errores:</b> revisa los detalles mostrados en la ventana final; los enlaces válidos de la lista se procesan de forma independiente.</li><li><b>No encuentras el archivo:</b> revisa la carpeta de destino indicada en pantalla. La interfaz utiliza la carpeta <code>downloads</code> del proyecto si la ruta configurada no está disponible.</li></ul><p>Vuelve a <a href="{{ url_for('home') }}">Nueva descarga</a> para limpiar el formulario y empezar otra tarea.</p></section>
+          <div class="callout legal"><b>Uso responsable</b><span>Descarga únicamente contenido que tengas derecho a guardar y respeta las condiciones de uso de YouTube.</span></div>
+        </article>
+      </div>
+      <footer>VIDEO DOWNLOADER <span>·</span> Manual de uso.</footer>
+    </main>
+  </div>
+</body>
+</html>
